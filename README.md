@@ -54,7 +54,7 @@ cd src/ExpenseSplitter.Api
 dotnet run
 ```
 
-The API starts at `http://localhost:5299`, auto-applies EF Core migrations, and serves Swagger UI at `http://localhost:5299/swagger`.
+The API starts at `http://localhost:5078`, auto-applies EF Core migrations, and serves Swagger UI at `http://localhost:5078/swagger`.
 
 ### Frontend
 
@@ -72,7 +72,7 @@ The app starts at `http://localhost:5173`.
 docker compose up --build
 ```
 
-This runs both the API (port 5299) and frontend (port 5173) in containers, no local .NET/Node install required.
+This runs both the API (port 5078) and frontend (port 5173) in containers, no local .NET/Node install required.
 
 ### Running tests
 
