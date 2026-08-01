@@ -198,7 +198,7 @@ export default function GroupDetailPage() {
                       <Cell key={i} fill={COLORS[i % COLORS.length]} />
                     ))}
                   </Pie>
-                  <Tooltip formatter={(v: number) => `$${v.toFixed(2)}`} />
+                  <Tooltip formatter={(v) => `$${Number(v).toFixed(2)}`} />
                 </PieChart>
               </ResponsiveContainer>
             )}
@@ -213,7 +213,7 @@ export default function GroupDetailPage() {
                   <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
                   <XAxis dataKey="month" fontSize={12} />
                   <YAxis fontSize={12} />
-                  <Tooltip formatter={(v: number) => `$${v.toFixed(2)}`} />
+                  <Tooltip formatter={(v) => `$${Number(v).toFixed(2)}`} />
                   <Bar dataKey="total" fill="#6366f1" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
