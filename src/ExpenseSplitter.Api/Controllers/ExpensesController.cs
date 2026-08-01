@@ -101,11 +101,12 @@ public class ExpensesController : ApiControllerBase
     {
         if (!await IsMember(groupId)) return Forbid();
 
-        var breakdown = await _db.Expenses
-            .Where(e => e.GroupId == groupId)
+        var expenses = await _db.Expenses.Where(e => e.GroupId == groupId).ToListAsync();
+
+        var breakdown = expenses
             .GroupBy(e => e.Category)
             .Select(g => new CategoryBreakdownDto(g.Key.ToString(), g.Sum(e => e.Amount)))
-            .ToListAsync();
+            .ToList();
 
         return Ok(breakdown);
     }
