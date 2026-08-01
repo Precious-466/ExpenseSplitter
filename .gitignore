@@ -1,0 +1,22 @@
+# .NET
+bin/
+obj/
+*.user
+*.db
+*.db-shm
+*.db-wal
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+
+# IDE
+.vs/
+.vscode/
+*.suo
+
+# Logs
+*.log
+api_out.log
+api_err.log
