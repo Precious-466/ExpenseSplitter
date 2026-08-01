@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: src/ExpenseSplitter.Api/Dockerfile
     ports:
-      - "5299:5299"
+      - "5078:5078"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Data Source=/data/expensesplitter.db

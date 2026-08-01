@@ -16,6 +16,10 @@ export const authApi = {
     client.post<AuthResponse>('/auth/register', { name, email, password }).then((r) => r.data),
   login: (email: string, password: string) =>
     client.post<AuthResponse>('/auth/login', { email, password }).then((r) => r.data),
+  forgotPassword: (email: string) =>
+    client.post<{ resetToken: string | null }>('/auth/forgot-password', { email }).then((r) => r.data),
+  resetPassword: (token: string, newPassword: string) =>
+    client.post('/auth/reset-password', { token, newPassword }),
 };
 
 export const groupsApi = {

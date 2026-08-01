@@ -15,7 +15,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /app .
 
-ENV ASPNETCORE_URLS=http://+:5299
-EXPOSE 5299
+ENV ASPNETCORE_URLS=http://+:5078
+EXPOSE 5078
 
 ENTRYPOINT ["dotnet", "ExpenseSplitter.Api.dll"]
