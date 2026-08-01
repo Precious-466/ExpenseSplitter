@@ -4,6 +4,12 @@
 
 A full-stack expense-splitting app (like Splitwise) built with **ASP.NET Core 8** and **React + TypeScript**. Create groups, log shared expenses with flexible splits, and settle up with the minimum number of payments.
 
+## Screenshots
+
+| Dashboard | Balances & suggested settlements |
+|---|---|
+| ![Dashboard](docs/screenshots/dashboard.jpg) | ![Balances](docs/screenshots/balances.jpg) |
+
 ## Features
 
 - **Auth** — JWT-based registration/login with BCrypt password hashing
