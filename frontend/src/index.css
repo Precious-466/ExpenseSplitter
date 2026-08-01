@@ -1,4 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, 'Segoe UI', sans-serif;
+
+  --color-brand-50: #eefdf6;
+  --color-brand-100: #d5f9e8;
+  --color-brand-200: #adf1d3;
+  --color-brand-300: #75e3b8;
+  --color-brand-400: #3ecd9c;
+  --color-brand-500: #18b384;
+  --color-brand-600: #0e916c;
+  --color-brand-700: #0d7459;
+  --color-brand-800: #0e5c48;
+  --color-brand-900: #0d4c3d;
+
+  --color-coral-400: #ff8a65;
+  --color-coral-500: #fb6f4c;
+  --color-coral-600: #ea5a38;
+}
 
 :root {
   color-scheme: light dark;
@@ -6,5 +26,30 @@
 
 body {
   margin: 0;
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font-sans);
+  background-color: #fbfaf7;
+  color: #1e293b;
+}
+
+.app-shell {
+  background-image:
+    radial-gradient(circle at 8% -10%, color-mix(in srgb, var(--color-brand-300) 22%, transparent), transparent 45%),
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--color-coral-400) 14%, transparent), transparent 40%);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #0b1512;
+    color: #e2e8f0;
+  }
+
+  .app-shell {
+    background-image:
+      radial-gradient(circle at 8% -10%, color-mix(in srgb, var(--color-brand-700) 35%, transparent), transparent 45%),
+      radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--color-coral-600) 16%, transparent), transparent 40%);
+  }
+}
+
+::selection {
+  background: var(--color-brand-200);
 }

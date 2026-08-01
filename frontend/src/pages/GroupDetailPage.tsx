@@ -17,7 +17,17 @@ import type { CategoryBreakdown, Expense, GroupBalances, GroupDetail, MonthlyTre
 import { useAuth } from '../context/AuthContext';
 import AddExpenseModal from '../components/AddExpenseModal';
 
-const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#06b6d4', '#64748b'];
+const COLORS = ['#18b384', '#fb6f4c', '#0ea5e9', '#a855f7', '#f59e0b', '#0e916c', '#64748b'];
+
+const CATEGORY_ICON: Record<string, string> = {
+  Food: '🍽️',
+  Transport: '🚕',
+  Accommodation: '🏠',
+  Utilities: '💡',
+  Entertainment: '🎬',
+  Shopping: '🛍️',
+  Other: '✦',
+};
 
 type Tab = 'expenses' | 'balances' | 'analytics';
 
@@ -66,33 +76,46 @@ export default function GroupDetailPage() {
     loadAll();
   };
 
-  if (loading || !group) return <p className="text-slate-500">Loading...</p>;
+  if (loading || !group) {
+    return (
+      <div className="space-y-4">
+        <div className="h-8 w-56 rounded-lg bg-slate-200/60 dark:bg-slate-800/60 animate-pulse" />
+        <div className="h-24 rounded-2xl bg-slate-200/60 dark:bg-slate-800/60 animate-pulse" />
+      </div>
+    );
+  }
+
+  const TABS: { key: Tab; label: string }[] = [
+    { key: 'expenses', label: 'Expenses' },
+    { key: 'balances', label: 'Balances' },
+    { key: 'analytics', label: 'Analytics' },
+  ];
 
   return (
     <div>
       <div className="flex items-center justify-between mb-1">
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{group.name}</h1>
+        <h1 className="text-3xl font-extrabold tracking-tight text-brand-900 dark:text-white">{group.name}</h1>
         <button
           onClick={() => setShowAddExpense(true)}
-          className="px-4 py-2 text-sm rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium"
+          className="px-4 py-2.5 text-sm rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold shadow-md shadow-brand-500/25 hover:shadow-lg hover:shadow-brand-500/30 transition-all"
         >
           + Add expense
         </button>
       </div>
-      {group.description && <p className="text-sm text-slate-500 mb-6">{group.description}</p>}
+      {group.description && <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">{group.description}</p>}
 
-      <div className="flex gap-1 border-b border-slate-200 dark:border-slate-700 mb-6">
-        {(['expenses', 'balances', 'analytics'] as Tab[]).map((t) => (
+      <div className="inline-flex gap-1 bg-slate-100 dark:bg-slate-800/60 rounded-full p-1 mb-6">
+        {TABS.map((t) => (
           <button
-            key={t}
-            onClick={() => setTab(t)}
-            className={`px-4 py-2 text-sm font-medium capitalize border-b-2 -mb-px ${
-              tab === t
-                ? 'border-indigo-600 text-indigo-600'
-                : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-white'
+            key={t.key}
+            onClick={() => setTab(t.key)}
+            className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-all ${
+              tab === t.key
+                ? 'bg-white dark:bg-slate-900 text-brand-700 dark:text-brand-300 shadow-sm'
+                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
             }`}
           >
-            {t}
+            {t.label}
           </button>
         ))}
       </div>
@@ -105,19 +128,22 @@ export default function GroupDetailPage() {
             expenses.map((exp) => (
               <div
                 key={exp.id}
-                className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 flex items-center justify-between"
+                className="bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-2xl p-4 flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow"
               >
-                <div>
-                  <p className="font-medium text-slate-900 dark:text-white">{exp.description}</p>
+                <div className="grid place-items-center h-10 w-10 rounded-xl bg-brand-500/10 text-lg shrink-0">
+                  {CATEGORY_ICON[exp.category] ?? '✦'}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-slate-900 dark:text-white truncate">{exp.description}</p>
                   <p className="text-xs text-slate-400 mt-0.5">
                     {exp.category} · paid by {exp.paidByName} · {new Date(exp.incurredAt).toLocaleDateString()}
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="font-semibold text-slate-900 dark:text-white">${exp.amount.toFixed(2)}</span>
+                  <span className="font-bold text-slate-900 dark:text-white">${exp.amount.toFixed(2)}</span>
                   <button
                     onClick={() => handleDeleteExpense(exp.id)}
-                    className="text-xs text-red-500 hover:text-red-700"
+                    className="text-xs font-medium text-coral-500 hover:text-coral-700 hover:bg-coral-500/10 rounded-full px-2 py-1 transition-colors"
                   >
                     Delete
                   </button>
@@ -131,17 +157,21 @@ export default function GroupDetailPage() {
       {tab === 'balances' && balances && (
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Net balances</h3>
+            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Net balances</h3>
             <div className="space-y-2">
               {balances.balances.map((b) => (
                 <div
                   key={b.userId}
-                  className="flex items-center justify-between bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5"
+                  className="flex items-center justify-between bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-xl px-4 py-3 shadow-sm"
                 >
-                  <span className="text-sm text-slate-700 dark:text-slate-300">{b.userName}</span>
+                  <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">{b.userName}</span>
                   <span
-                    className={`text-sm font-medium ${
-                      b.netBalance > 0.01 ? 'text-emerald-600' : b.netBalance < -0.01 ? 'text-red-600' : 'text-slate-400'
+                    className={`text-sm font-bold ${
+                      b.netBalance > 0.01
+                        ? 'text-brand-600 dark:text-brand-400'
+                        : b.netBalance < -0.01
+                        ? 'text-coral-600 dark:text-coral-400'
+                        : 'text-slate-400'
                     }`}
                   >
                     {b.netBalance > 0.01 ? '+' : ''}
@@ -152,26 +182,26 @@ export default function GroupDetailPage() {
             </div>
           </div>
           <div>
-            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Suggested settlements</h3>
+            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Suggested settlements</h3>
             {balances.suggestedSettlements.length === 0 ? (
-              <p className="text-sm text-slate-400">Everyone is settled up.</p>
+              <p className="text-sm text-slate-400">Everyone is settled up. 🎉</p>
             ) : (
               <div className="space-y-2">
                 {balances.suggestedSettlements.map((t, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2.5"
+                    className="flex items-center justify-between bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-xl px-4 py-3 shadow-sm"
                   >
                     <span className="text-sm text-slate-700 dark:text-slate-300">
-                      {t.fromUserName} → {t.toUserName}
+                      {t.fromUserName} <span className="text-brand-500">→</span> {t.toUserName}
                     </span>
                     <div className="flex items-center gap-3">
-                      <span className="text-sm font-medium text-slate-900 dark:text-white">
+                      <span className="text-sm font-bold text-slate-900 dark:text-white">
                         ${t.amount.toFixed(2)}
                       </span>
                       <button
                         onClick={() => handleSettle(t.fromUserId, t.toUserId, t.amount)}
-                        className="text-xs text-indigo-600 hover:underline"
+                        className="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:bg-brand-500/10 rounded-full px-2.5 py-1 transition-colors"
                       >
                         Mark settled
                       </button>
@@ -185,9 +215,9 @@ export default function GroupDetailPage() {
       )}
 
       {tab === 'analytics' && (
-        <div className="grid md:grid-cols-2 gap-8">
-          <div>
-            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Spending by category</h3>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-2xl p-5 shadow-sm">
+            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Spending by category</h3>
             {categoryData.length === 0 ? (
               <p className="text-sm text-slate-400">No data yet.</p>
             ) : (
@@ -203,18 +233,18 @@ export default function GroupDetailPage() {
               </ResponsiveContainer>
             )}
           </div>
-          <div>
-            <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-3">Monthly trend</h3>
+          <div className="bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-2xl p-5 shadow-sm">
+            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Monthly trend</h3>
             {monthlyData.length === 0 ? (
               <p className="text-sm text-slate-400">No data yet.</p>
             ) : (
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={monthlyData}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+                  <CartesianGrid strokeDasharray="3 3" opacity={0.15} />
                   <XAxis dataKey="month" fontSize={12} />
                   <YAxis fontSize={12} />
                   <Tooltip formatter={(v) => `$${Number(v).toFixed(2)}`} />
-                  <Bar dataKey="total" fill="#6366f1" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="total" fill="#18b384" radius={[6, 6, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}
