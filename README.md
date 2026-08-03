@@ -104,3 +104,7 @@ The JWT secret in `src/ExpenseSplitter.Api/appsettings.json` is a placeholder fo
 | `GET /api/groups/{groupId}/analytics/monthly` | Monthly trend |
 
 Full interactive docs at `/swagger` when the API is running.
+
+## License
+
+MIT
