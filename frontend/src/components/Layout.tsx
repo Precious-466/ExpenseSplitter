@@ -17,34 +17,34 @@ export default function Layout() {
   };
 
   return (
-    <div className="app-shell min-h-screen">
-      <header className="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-[#0b1512]/80 border-b border-brand-900/5 dark:border-white/5">
-        <div className="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 group">
-            <span className="grid place-items-center h-8 w-8 rounded-xl bg-gradient-to-br from-brand-400 to-brand-600 text-white font-extrabold text-sm shadow-sm shadow-brand-500/30 group-hover:scale-105 transition-transform">
+    <div className="desk min-h-screen">
+      <header className="sticky top-0 z-40 bg-paper-50/95 dark:bg-ink-900/95 backdrop-blur-sm border-b-2 border-ink-900/10 dark:border-paper-100/10">
+        <div className="max-w-4xl mx-auto px-5 py-3 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <span className="grid place-items-center h-8 w-7 rounded-b-md bg-moss-600 text-paper-50 font-display font-bold text-sm shadow-[0_2px_0_var(--color-moss-900)] group-hover:-translate-y-px transition-transform">
               S
             </span>
-            <span className="text-lg font-extrabold tracking-tight text-brand-900 dark:text-brand-100">
+            <span className="font-display font-semibold text-lg tracking-tight text-ink-900 dark:text-paper-100">
               Splitly
             </span>
           </Link>
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 pr-2">
-              <span className="grid place-items-center h-7 w-7 rounded-full bg-coral-500/15 text-coral-600 dark:text-coral-400 text-xs font-bold">
+              <span className="grid place-items-center h-7 w-7 rounded-full border border-rust-500/40 text-rust-600 dark:text-rust-400 font-mono-nums text-xs font-semibold">
                 {initials(user?.name)}
               </span>
-              <span className="text-sm text-slate-600 dark:text-slate-300">{user?.name}</span>
+              <span className="text-sm text-ink-600 dark:text-ink-100">{user?.name}</span>
             </div>
             <button
               onClick={handleLogout}
-              className="text-sm font-medium text-slate-500 hover:text-brand-700 dark:hover:text-brand-300 transition-colors px-3 py-1.5 rounded-full hover:bg-brand-500/10"
+              className="text-sm font-medium text-ink-400 hover:text-moss-600 dark:hover:text-moss-400 transition-colors px-3 py-1.5 rounded-md hover:bg-moss-500/10"
             >
               Log out
             </button>
           </div>
         </div>
       </header>
-      <main className="max-w-5xl mx-auto px-4 py-10">
+      <main className="main-ledger max-w-4xl mx-auto py-10">
         <Outlet />
       </main>
     </div>

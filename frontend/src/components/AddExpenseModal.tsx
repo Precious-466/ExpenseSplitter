@@ -75,25 +75,23 @@ export default function AddExpenseModal({ groupId, members, currentUserId, onClo
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center px-4 z-50 overflow-y-auto py-8">
-      <div className="w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-black/5 dark:border-white/10 p-6">
-        <h2 className="text-lg font-bold text-brand-900 dark:text-white mb-4">Add expense</h2>
+    <div className="fixed inset-0 bg-ink-950/50 backdrop-blur-sm flex items-center justify-center px-4 z-50 overflow-y-auto py-8">
+      <div className="w-full max-w-lg paper-card p-6 pt-7">
+        <h2 className="font-display text-lg font-semibold text-ink-900 dark:text-paper-100 mb-4">Add expense</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                Description
-              </label>
+              <label className="block text-sm font-medium text-ink-600 dark:text-ink-100 mb-1">Description</label>
               <input
                 required
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Dinner at the beach shack"
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-shadow"
+                className="field-input"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Amount</label>
+              <label className="block text-sm font-medium text-ink-600 dark:text-ink-100 mb-1">Amount</label>
               <input
                 required
                 type="number"
@@ -101,15 +99,15 @@ export default function AddExpenseModal({ groupId, members, currentUserId, onClo
                 min="0.01"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-shadow"
+                className="field-input font-mono-nums"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Category</label>
+              <label className="block text-sm font-medium text-ink-600 dark:text-ink-100 mb-1">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as ExpenseCategory)}
-                className="w-full rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-shadow"
+                className="field-input"
               >
                 {CATEGORIES.map((c) => (
                   <option key={c} value={c}>
@@ -121,11 +119,11 @@ export default function AddExpenseModal({ groupId, members, currentUserId, onClo
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Paid by</label>
+            <label className="block text-sm font-medium text-ink-600 dark:text-ink-100 mb-1">Paid by</label>
             <select
               value={paidByUserId}
               onChange={(e) => setPaidByUserId(parseInt(e.target.value))}
-              className="w-full rounded-xl border border-slate-200 dark:border-slate-700 dark:bg-slate-800 dark:text-white px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-shadow"
+              className="field-input"
             >
               {members.map((m) => (
                 <option key={m.userId} value={m.userId}>
@@ -136,7 +134,7 @@ export default function AddExpenseModal({ groupId, members, currentUserId, onClo
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Split</label>
+            <label className="block text-sm font-medium text-ink-600 dark:text-ink-100 mb-1">Split</label>
             <div className="flex gap-2 mb-3">
               {(['Equal', 'Exact', 'Percentage'] as SplitType[]).map((t) => (
                 <button
@@ -145,8 +143,8 @@ export default function AddExpenseModal({ groupId, members, currentUserId, onClo
                   onClick={() => setSplitType(t)}
                   className={`px-3.5 py-1.5 text-xs font-medium rounded-full border transition-colors ${
                     splitType === t
-                      ? 'bg-brand-600 text-white border-brand-600 shadow-sm shadow-brand-500/25'
-                      : 'text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-brand-300'
+                      ? 'bg-moss-600 text-paper-50 border-moss-600'
+                      : 'text-ink-600 dark:text-ink-100 border-paper-300 dark:border-ink-600 hover:border-moss-400'
                   }`}
                 >
                   {t}
@@ -156,14 +154,14 @@ export default function AddExpenseModal({ groupId, members, currentUserId, onClo
 
             <div className="space-y-2">
               {members.map((m) => (
-                <div key={m.userId} className="flex items-center gap-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl px-3 py-2">
+                <div key={m.userId} className="flex items-center gap-3 bg-paper-100 dark:bg-ink-900 rounded-md px-3 py-2">
                   <input
                     type="checkbox"
                     checked={selectedMembers.has(m.userId)}
                     onChange={() => toggleMember(m.userId)}
-                    className="rounded accent-brand-600"
+                    className="rounded accent-moss-600"
                   />
-                  <span className="text-sm text-slate-700 dark:text-slate-300 flex-1">{m.name}</span>
+                  <span className="text-sm text-ink-700 dark:text-ink-100 flex-1">{m.name}</span>
                   {splitType !== 'Equal' && selectedMembers.has(m.userId) && (
                     <input
                       type="number"
@@ -171,7 +169,7 @@ export default function AddExpenseModal({ groupId, members, currentUserId, onClo
                       placeholder={splitType === 'Percentage' ? '%' : '$'}
                       value={values[m.userId] ?? ''}
                       onChange={(e) => setValues((prev) => ({ ...prev, [m.userId]: e.target.value }))}
-                      className="w-24 rounded-lg border border-slate-200 dark:border-slate-700 dark:bg-slate-900 dark:text-white px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+                      className="w-24 rounded-md border border-paper-300 dark:border-ink-600 dark:bg-ink-800 dark:text-paper-100 px-2 py-1 text-sm font-mono-nums focus:outline-none focus:ring-2 focus:ring-moss-400"
                     />
                   )}
                 </div>
@@ -179,22 +177,18 @@ export default function AddExpenseModal({ groupId, members, currentUserId, onClo
             </div>
           </div>
 
-          {error && <p className="text-sm text-coral-600 bg-coral-500/10 rounded-lg px-3 py-2">{error}</p>}
+          {error && <p className="text-sm text-rust-600 dark:text-rust-400 bg-rust-500/10 rounded-md px-3 py-2">{error}</p>}
 
           <div className="flex justify-end gap-2 pt-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm rounded-xl font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="px-4 py-2 text-sm rounded-md font-medium text-ink-600 dark:text-ink-100 hover:bg-paper-200 dark:hover:bg-ink-900 transition-colors"
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="px-4 py-2 text-sm rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 disabled:opacity-60 text-white font-semibold shadow-md shadow-brand-500/25 transition-all"
-            >
-              {loading ? 'Adding...' : 'Add expense'}
+            <button type="submit" disabled={loading} className="btn-primary px-4 py-2">
+              {loading ? 'Adding…' : 'Add expense'}
             </button>
           </div>
         </form>

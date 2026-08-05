@@ -17,7 +17,7 @@ import type { CategoryBreakdown, Expense, GroupBalances, GroupDetail, MonthlyTre
 import { useAuth } from '../context/AuthContext';
 import AddExpenseModal from '../components/AddExpenseModal';
 
-const COLORS = ['#18b384', '#fb6f4c', '#0ea5e9', '#a855f7', '#f59e0b', '#0e916c', '#64748b'];
+const COLORS = ['#3f6b52', '#bd5b34', '#b98a2e', '#5b7268', '#6fa085', '#d17a54', '#33473d'];
 
 const CATEGORY_ICON: Record<string, string> = {
   Food: '🍽️',
@@ -79,8 +79,8 @@ export default function GroupDetailPage() {
   if (loading || !group) {
     return (
       <div className="space-y-4">
-        <div className="h-8 w-56 rounded-lg bg-slate-200/60 dark:bg-slate-800/60 animate-pulse" />
-        <div className="h-24 rounded-2xl bg-slate-200/60 dark:bg-slate-800/60 animate-pulse" />
+        <div className="h-8 w-56 rounded-sm bg-paper-200/60 dark:bg-ink-800/60 animate-pulse" />
+        <div className="h-24 rounded-sm bg-paper-200/60 dark:bg-ink-800/60 animate-pulse" />
       </div>
     );
   }
@@ -94,25 +94,24 @@ export default function GroupDetailPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-1">
-        <h1 className="text-3xl font-extrabold tracking-tight text-brand-900 dark:text-white">{group.name}</h1>
-        <button
-          onClick={() => setShowAddExpense(true)}
-          className="px-4 py-2.5 text-sm rounded-xl bg-gradient-to-r from-brand-500 to-brand-600 hover:from-brand-600 hover:to-brand-700 text-white font-semibold shadow-md shadow-brand-500/25 hover:shadow-lg hover:shadow-brand-500/30 transition-all"
-        >
+        <h1 className="font-display text-3xl font-semibold tracking-tight text-ink-900 dark:text-paper-100">
+          {group.name}
+        </h1>
+        <button onClick={() => setShowAddExpense(true)} className="btn-primary">
           + Add expense
         </button>
       </div>
-      {group.description && <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">{group.description}</p>}
+      {group.description && <p className="text-sm text-ink-400 mb-6">{group.description}</p>}
 
-      <div className="inline-flex gap-1 bg-slate-100 dark:bg-slate-800/60 rounded-full p-1 mb-6">
+      <div className="inline-flex gap-1 border-b-2 border-paper-300 dark:border-ink-600 mb-6">
         {TABS.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-all ${
+            className={`px-4 py-2 text-sm font-semibold -mb-0.5 border-b-2 transition-colors ${
               tab === t.key
-                ? 'bg-white dark:bg-slate-900 text-brand-700 dark:text-brand-300 shadow-sm'
-                : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                ? 'border-moss-600 text-moss-700 dark:text-moss-400'
+                : 'border-transparent text-ink-400 hover:text-ink-600 dark:hover:text-ink-100'
             }`}
           >
             {t.label}
@@ -123,27 +122,29 @@ export default function GroupDetailPage() {
       {tab === 'expenses' && (
         <div className="space-y-3">
           {expenses.length === 0 ? (
-            <p className="text-slate-500 text-sm">No expenses yet. Add the first one.</p>
+            <p className="text-ink-400 text-sm">No expenses yet. Add the first one.</p>
           ) : (
             expenses.map((exp) => (
-              <div
-                key={exp.id}
-                className="bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-2xl p-4 flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow"
-              >
-                <div className="grid place-items-center h-10 w-10 rounded-xl bg-brand-500/10 text-lg shrink-0">
+              <div key={exp.id} className="paper-card p-4 pt-5 flex items-center gap-4">
+                <div className="grid place-items-center h-10 w-10 rounded-md bg-moss-500/10 text-lg shrink-0">
                   {CATEGORY_ICON[exp.category] ?? '✦'}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-slate-900 dark:text-white truncate">{exp.description}</p>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    {exp.category} · paid by {exp.paidByName} · {new Date(exp.incurredAt).toLocaleDateString()}
-                  </p>
+                <div className="flex-1 min-w-0 leader-row">
+                  <div className="min-w-0">
+                    <p className="font-semibold text-ink-900 dark:text-paper-100 truncate">{exp.description}</p>
+                    <p className="text-xs text-ink-400 mt-0.5">
+                      {exp.category} · paid by {exp.paidByName} · {new Date(exp.incurredAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <span className="leader-fill hidden sm:block" />
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="font-bold text-slate-900 dark:text-white">${exp.amount.toFixed(2)}</span>
+                  <span className="font-mono-nums font-semibold text-ink-900 dark:text-paper-100">
+                    ${exp.amount.toFixed(2)}
+                  </span>
                   <button
                     onClick={() => handleDeleteExpense(exp.id)}
-                    className="text-xs font-medium text-coral-500 hover:text-coral-700 hover:bg-coral-500/10 rounded-full px-2 py-1 transition-colors"
+                    className="text-xs font-medium text-rust-500 hover:text-rust-700 hover:bg-rust-500/10 rounded-full px-2 py-1 transition-colors"
                   >
                     Delete
                   </button>
@@ -157,21 +158,19 @@ export default function GroupDetailPage() {
       {tab === 'balances' && balances && (
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Net balances</h3>
+            <h3 className="text-xs uppercase tracking-[0.12em] font-semibold text-ink-400 mb-3">Net balances</h3>
             <div className="space-y-2">
               {balances.balances.map((b) => (
-                <div
-                  key={b.userId}
-                  className="flex items-center justify-between bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-xl px-4 py-3 shadow-sm"
-                >
-                  <span className="text-sm text-slate-700 dark:text-slate-300 font-medium">{b.userName}</span>
+                <div key={b.userId} className="leader-row paper-card px-4 py-3">
+                  <span className="text-sm text-ink-700 dark:text-ink-100 font-medium">{b.userName}</span>
+                  <span className="leader-fill" />
                   <span
-                    className={`text-sm font-bold ${
+                    className={`text-sm font-mono-nums font-bold ${
                       b.netBalance > 0.01
-                        ? 'text-brand-600 dark:text-brand-400'
+                        ? 'text-moss-600 dark:text-moss-400'
                         : b.netBalance < -0.01
-                        ? 'text-coral-600 dark:text-coral-400'
-                        : 'text-slate-400'
+                        ? 'text-rust-600 dark:text-rust-400'
+                        : 'text-ink-400'
                     }`}
                   >
                     {b.netBalance > 0.01 ? '+' : ''}
@@ -182,26 +181,25 @@ export default function GroupDetailPage() {
             </div>
           </div>
           <div>
-            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Suggested settlements</h3>
+            <h3 className="text-xs uppercase tracking-[0.12em] font-semibold text-ink-400 mb-3">Suggested settlements</h3>
             {balances.suggestedSettlements.length === 0 ? (
-              <p className="text-sm text-slate-400">Everyone is settled up. 🎉</p>
+              <p className="text-sm text-ink-400">
+                <span className="stamp text-moss-600 dark:text-moss-400">Settled</span>
+              </p>
             ) : (
               <div className="space-y-2">
                 {balances.suggestedSettlements.map((t, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-xl px-4 py-3 shadow-sm"
-                  >
-                    <span className="text-sm text-slate-700 dark:text-slate-300">
-                      {t.fromUserName} <span className="text-brand-500">→</span> {t.toUserName}
+                  <div key={idx} className="paper-card px-4 py-3 flex items-center justify-between">
+                    <span className="text-sm text-ink-700 dark:text-ink-100">
+                      {t.fromUserName} <span className="text-moss-500">→</span> {t.toUserName}
                     </span>
                     <div className="flex items-center gap-3">
-                      <span className="text-sm font-bold text-slate-900 dark:text-white">
+                      <span className="text-sm font-mono-nums font-bold text-ink-900 dark:text-paper-100">
                         ${t.amount.toFixed(2)}
                       </span>
                       <button
                         onClick={() => handleSettle(t.fromUserId, t.toUserId, t.amount)}
-                        className="text-xs font-semibold text-brand-600 dark:text-brand-400 hover:bg-brand-500/10 rounded-full px-2.5 py-1 transition-colors"
+                        className="text-xs font-semibold text-moss-600 dark:text-moss-400 hover:bg-moss-500/10 rounded-full px-2.5 py-1 transition-colors"
                       >
                         Mark settled
                       </button>
@@ -216,10 +214,10 @@ export default function GroupDetailPage() {
 
       {tab === 'analytics' && (
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-2xl p-5 shadow-sm">
-            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Spending by category</h3>
+          <div className="paper-card p-5 pt-6">
+            <h3 className="text-xs uppercase tracking-[0.12em] font-semibold text-ink-400 mb-3">Spending by category</h3>
             {categoryData.length === 0 ? (
-              <p className="text-sm text-slate-400">No data yet.</p>
+              <p className="text-sm text-ink-400">No data yet.</p>
             ) : (
               <ResponsiveContainer width="100%" height={260}>
                 <PieChart>
@@ -233,10 +231,10 @@ export default function GroupDetailPage() {
               </ResponsiveContainer>
             )}
           </div>
-          <div className="bg-white dark:bg-slate-900/70 border border-black/5 dark:border-white/10 rounded-2xl p-5 shadow-sm">
-            <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Monthly trend</h3>
+          <div className="paper-card p-5 pt-6">
+            <h3 className="text-xs uppercase tracking-[0.12em] font-semibold text-ink-400 mb-3">Monthly trend</h3>
             {monthlyData.length === 0 ? (
-              <p className="text-sm text-slate-400">No data yet.</p>
+              <p className="text-sm text-ink-400">No data yet.</p>
             ) : (
               <ResponsiveContainer width="100%" height={260}>
                 <BarChart data={monthlyData}>
@@ -244,7 +242,7 @@ export default function GroupDetailPage() {
                   <XAxis dataKey="month" fontSize={12} />
                   <YAxis fontSize={12} />
                   <Tooltip formatter={(v) => `$${Number(v).toFixed(2)}`} />
-                  <Bar dataKey="total" fill="#18b384" radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="total" fill="#3f6b52" radius={[3, 3, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}
