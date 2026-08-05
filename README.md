@@ -6,6 +6,12 @@ A full-stack expense-splitting app (like Splitwise) built with **ASP.NET Core 8*
 
 The frontend leans into a **shared-ledger** visual identity: torn-paper cards, dotted-leader rows connecting each expense to its amount like a printed receipt, tabular monospace figures, and a rotated rubber-stamp badge for settled balances.
 
+## Screenshots
+
+| Multiple groups | Balances & suggested settlements (4-person group) | Analytics |
+|---|---|---|
+| ![Dashboard with multiple groups](docs/screenshots/dashboard.jpg) | ![Net balances and settlements](docs/screenshots/balances.jpg) | ![Spending by category and monthly trend](docs/screenshots/analytics.jpg) |
+
 ## Features
 
 - **Auth** — JWT-based registration/login with BCrypt password hashing
