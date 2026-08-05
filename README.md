@@ -6,21 +6,15 @@ A full-stack expense-splitting app (like Splitwise) built with **ASP.NET Core 8*
 
 The frontend leans into a **shared-ledger** visual identity: torn-paper cards, dotted-leader rows connecting each expense to its amount like a printed receipt, tabular monospace figures, and a rotated rubber-stamp badge for settled balances.
 
-## Screenshots
-
-| Dashboard | Balances & suggested settlements |
-|---|---|
-| ![Dashboard](docs/screenshots/dashboard.jpg) | ![Balances](docs/screenshots/balances.jpg) |
-
 ## Features
 
 - **Auth** — JWT-based registration/login with BCrypt password hashing
-- **Groups** — create groups, invite members by email
-- **Expenses** — split equally, by exact amounts, or by percentage
-- **Balances** — real-time net balance per member
-- **Debt simplification** — a min-cash-flow algorithm reduces N-way group debt to the minimum number of payments needed to settle up (instead of everyone paying everyone)
-- **Analytics** — spending by category and monthly trend charts
-- **Settlements** — record a payment and it clears from the outstanding balances
+- **Groups** — create multiple groups, each with any number of members invited by email
+- **Expenses** — split equally, by exact amounts, or by percentage, across mixed categories (food, transport, accommodation, utilities, entertainment, shopping)
+- **Balances** — real-time net balance per member, tested across groups ranging from 2 to 4+ people
+- **Debt simplification** — a min-cash-flow algorithm reduces N-way group debt to the minimum number of payments needed to settle up (instead of everyone paying everyone); verified on a 4-person group with tangled debts collapsing to 3 direct payments
+- **Settlements** — mark a suggested payment as settled and it immediately clears from the outstanding balances and net-balance list
+- **Analytics** — per-group spending-by-category pie chart and monthly-trend bar chart, both driven by real expense data
 
 ## Architecture
 
