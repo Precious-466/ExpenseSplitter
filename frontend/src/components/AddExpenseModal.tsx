@@ -177,7 +177,7 @@ export default function AddExpenseModal({ groupId, members, currentUserId, onClo
             </div>
           </div>
 
-          {error && <p className="text-sm text-rust-600 dark:text-rust-400 bg-rust-500/10 rounded-md px-3 py-2">{error}</p>}
+          {error && <p role="alert" className="text-sm text-rust-600 dark:text-rust-400 bg-rust-500/10 rounded-md px-3 py-2">{error}</p>}
 
           <div className="flex justify-end gap-2 pt-2">
             <button

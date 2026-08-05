@@ -66,12 +66,13 @@ export default function ResetPasswordPage() {
                   type="password"
                   required
                   minLength={6}
+                  autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="field-input"
                 />
               </div>
-              {error && <p className="text-sm text-rust-600 dark:text-rust-400 bg-rust-500/10 rounded-md px-3 py-2">{error}</p>}
+              {error && <p role="alert" className="text-sm text-rust-600 dark:text-rust-400 bg-rust-500/10 rounded-md px-3 py-2">{error}</p>}
               <button type="submit" disabled={loading} className="btn-primary w-full py-3">
                 {loading ? 'Updating…' : 'Update password'}
               </button>

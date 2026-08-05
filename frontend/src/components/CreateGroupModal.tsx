@@ -62,7 +62,7 @@ export default function CreateGroupModal({ onClose, onCreated }: Props) {
             />
             <p className="text-xs text-ink-400 mt-1">Members must already have a Splitly account.</p>
           </div>
-          {error && <p className="text-sm text-rust-600 dark:text-rust-400 bg-rust-500/10 rounded-md px-3 py-2">{error}</p>}
+          {error && <p role="alert" className="text-sm text-rust-600 dark:text-rust-400 bg-rust-500/10 rounded-md px-3 py-2">{error}</p>}
           <div className="flex justify-end gap-2 pt-2">
             <button
               type="button"

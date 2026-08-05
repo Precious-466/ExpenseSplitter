@@ -16,18 +16,9 @@ import { expensesApi, groupsApi } from '../api/endpoints';
 import type { CategoryBreakdown, Expense, GroupBalances, GroupDetail, MonthlyTrend } from '../types';
 import { useAuth } from '../context/AuthContext';
 import AddExpenseModal from '../components/AddExpenseModal';
+import CategoryIcon from '../components/CategoryIcon';
 
 const COLORS = ['#3f6b52', '#bd5b34', '#b98a2e', '#5b7268', '#6fa085', '#d17a54', '#33473d'];
-
-const CATEGORY_ICON: Record<string, string> = {
-  Food: '🍽️',
-  Transport: '🚕',
-  Accommodation: '🏠',
-  Utilities: '💡',
-  Entertainment: '🎬',
-  Shopping: '🛍️',
-  Other: '✦',
-};
 
 type Tab = 'expenses' | 'balances' | 'analytics';
 
@@ -126,8 +117,8 @@ export default function GroupDetailPage() {
           ) : (
             expenses.map((exp) => (
               <div key={exp.id} className="paper-card p-4 pt-5 flex items-center gap-4">
-                <div className="grid place-items-center h-10 w-10 rounded-md bg-moss-500/10 text-lg shrink-0">
-                  {CATEGORY_ICON[exp.category] ?? '✦'}
+                <div className="grid place-items-center h-10 w-10 rounded-md bg-moss-500/10 text-moss-600 dark:text-moss-400 shrink-0">
+                  <CategoryIcon category={exp.category} />
                 </div>
                 <div className="flex-1 min-w-0 leader-row">
                   <div className="min-w-0">

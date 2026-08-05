@@ -4,6 +4,8 @@
 
 A full-stack expense-splitting app (like Splitwise) built with **ASP.NET Core 8** and **React + TypeScript**. Create groups, log shared expenses with flexible splits, and settle up with the minimum number of payments.
 
+The frontend leans into a **shared-ledger** visual identity: torn-paper cards, dotted-leader rows connecting each expense to its amount like a printed receipt, tabular monospace figures, and a rotated rubber-stamp badge for settled balances.
+
 ## Screenshots
 
 | Dashboard | Balances & suggested settlements |
